@@ -1,0 +1,5 @@
+/* pages/borrowrecord/borrowrecord.wxss */
+.line {
+  width: 100%;
+  border: 1px solid #eee;
+}

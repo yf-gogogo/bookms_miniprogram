@@ -1,0 +1,37 @@
+<view class="content" wx:if="{{bookMsg}}">
+    <view class="book-content">
+        <view>
+            <view class="book-list">
+                <view class="book-image">
+                    <image src="{{bookMsg.book_cover}}" mode="aspectFit"></image>
+                </view>
+                <view class="book-info">
+                    <view class="book-info-style">
+                        <view>书名:{{bookMsg.book_name}}</view>
+                        <view>作者:{{bookMsg.book_writer}}\n</view>
+                        <!-- <view>价格:\n</view> -->
+                        <view>出版信息:{{bookMsg.pub_company}}\n</view>
+                        <view wx:if="{{!showAddBook}}">可借数量:{{bookMsg.current_num}}\n</view>
+                    </view>
+
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="space-line-30"></view>
+    <scroll-view scroll-y="true" class="scroll-content" style="height:{{windowHeight*0.66}}px">
+        <view class="book-intro">
+            <text class="book-title">内容推荐</text>
+            <text class="book-msg">{{bookMsg.book_des}}</text>
+        </view>
+        <view class="space-line-30"></view>
+       
+        <view class="btn-area">
+             <button type="primary" size="default" wx:if="{{showBorrowBtn}}" bindtap="borrowBook">借阅</button>
+               <button type="primary" size="default" wx:if="{{showBorrowedBtn}}" >已借阅</button>
+               <button type="primary" size="default" wx:if="{{showOrderedBtn}}" >已预约</button> 
+            <button type="primary" size="default" wx:if="{{showOrderBtn}}" bindtap="orderBook">预约</button>
+            <!-- <button type="primary" size="default" wx:if="{{showAddBook}}" bindtap="addBook">录入</button> -->
+         </view>  
+    </scroll-view>
+</view>

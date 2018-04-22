@@ -1,0 +1,27 @@
+<import src="../../zanui.wxml" />
+<view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">借书说明</view>
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">借书步骤</view>
+                    
+                      
+                      <!-- <view class="zan-panel">
+                        <view class="zan-cell zan-cell">
+                          <view class="zan-cell__bd"> -->
+                            <template is="zan-steps" 
+                            data="{{ type: 'vertical', hasDesc: true, steps }}">
+                            </template>
+                          <!-- </view>
+                        </view>
+                      </view> -->
+                    
+                </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">取书处</view>
+                    <view class="weui-media-box__desc">图书管理员处取书(工程中心302实验室020座位)</view>
+                    <view class="weui-media-box__desc">myf@mails.ccnu.edu.cn</view>
+                </view>
+            </view>
+            
+        </view>

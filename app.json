@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/me/me",
+    "pages/logs/logs",
+    "pages/medetail/medetail",
+    "pages/bookdetail/bookdetail",
+    "pages/borrowtip/borrowtip",
+    "pages/borrowrecord/borrowrecord",
+    "pages/orderrecord/orderrecord"
+  ],
+  "window": {
+    "backgroundTextStyle": "black",
+    "navigationBarBackgroundColor": "#00BFFF",
+    "navigationBarTitleText": "图书借阅系统",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "list": [
+      {
+        "iconPath": "assets/img/search-1.png",
+        "selectedIconPath": "assets/img/search.png",
+        "pagePath": "pages/index/index",
+        "text": "图书查询"
+      },
+      {
+        "iconPath": "assets/img/dy-1.png",
+        "selectedIconPath": "assets/img/dy.png",
+        "pagePath": "pages/borrowtip/borrowtip",
+        "text": "借阅须知"
+      },
+      {
+        "iconPath": "assets/img/tj-1.png",
+        "selectedIconPath": "assets/img/tj.png",
+        "pagePath": "pages/me/me",
+        "text": "我"
+      }
+    ]
+  }
+}

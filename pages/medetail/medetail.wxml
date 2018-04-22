@@ -1,0 +1,67 @@
+<!--pages/medetail/medetail.wxml-->
+<view class="page">
+  <view class="page__hd">
+        <text class="page__title center">你好，{{nickName}}</text>
+  </view>
+  <view class="page__bd  page__bd_spacing">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+        <view class="weui-cells__title textcolor">姓名(必填)</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="user_name" disabled="{{focus}}"
+                    focus="{{!focus}}" value="{{user_name}}" placeholder="真实姓名">
+                    
+                    </input>
+                </view>
+            </view>
+        </view>
+        
+        <view class="weui-cells__title textcolor">学号(必填)</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" type='number' disabled="{{focus}}"
+                    name="user_cardid" value="{{user_cardid}}" placeholder="真实学号">
+              
+                    </input>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title textcolor">邮箱(必填)</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" disabled="{{focus}}"
+                     name="user_email" value="{{user_email}}" placeholder="真实邮箱" >
+                     
+                     </input>
+                </view>
+            </view>
+        </view>
+        <view class="weui-cells__title textcolor">手机号(选填)</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input"  type='number' disabled="{{focus}}"
+                     name="user_phone" value='{{user_phone}}' placeholder="电话" >
+                     
+                     </input>
+                </view>
+            </view>
+        </view>
+        <view class="weui-btn-area weui-flex">
+            <view class="weui-flex__item">
+              <button class="weui-btn placeholder" type="default" bindtap='back'>返回</button>
+            </view>
+            <view class="weui-flex__item">
+              <button class="weui-btn placeholder" type="primary"
+               wx:if="{{focus}}" bindtap='getfocus'>点击修改</button>
+               <button class="weui-btn placeholder" type="primary"
+               wx:if="{{!focus}}" form-type='submit'>确定</button>
+            </view>
+        </view>
+      </form>
+  </view>
+</view>
