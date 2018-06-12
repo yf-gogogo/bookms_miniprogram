@@ -10,13 +10,18 @@
 }
 
 .book-list {
+  padding: 10px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  /* align-items: flex-start;
   justify-content: flex-start;
   box-sizing: border-box;
   margin-top: 20rpx;
-  background-color: #fff; 
+  background-color: #fff;  */
+  border-bottom: 1px solid #DEDEDE;
+ 
+  margin: 5px;
+ 
   height: 280rpx;
 }
 
@@ -35,21 +40,22 @@
 }
 
 .book-info {
-  background-color: #fff;
-  flex: 0 0 66%;
-  margin-left: 20rpx;
+  /* background-color: #fff;  */
+  flex: 0 0 60%;
+  height: 280rpx;
+  margin: 20rpx;
+  /* padding-right: 20rpx; */
 }
 
 .book-info-style {
-  height: 280rpx;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: 272rpx;
+  width: 400rpx; 
+  padding-right: 20rpx;
+  /* background-color: white; */
 }
 
 .book-info-style view {
-  font-size: 28rpx;
+  font-size: 30rpx;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

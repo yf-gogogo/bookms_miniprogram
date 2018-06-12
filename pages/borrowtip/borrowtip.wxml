@@ -22,6 +22,11 @@
                     <view class="weui-media-box__desc">图书管理员处取书(工程中心302实验室020座位)</view>
                     <view class="weui-media-box__desc">myf@mails.ccnu.edu.cn</view>
                 </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">还书</view>
+                    <view class="weui-media-box__desc">进个人中心借阅记录中申请还书</view>
+                  
+                </view>
             </view>
             
         </view>

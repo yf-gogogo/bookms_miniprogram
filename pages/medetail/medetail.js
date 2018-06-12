@@ -11,19 +11,30 @@ Page({
     nickName: '陌生人',
     countryCodes: ["+86", "+86", "+86", "+86"],
     countryCodeIndex: 0,
-    focus:true,
+    focus:false,
     user_name:null,
     user_cardid:null,
     user_email:null,
-    user_phone:null
+    user_phone:null,
+    isChecked:false,
+  },
+  bindKeyInput:function(e){
+    if(e.detail.value == '123'){
+      this.setData({
+        isChecked: true
+      })
+    }else{
+      this.setData({
+        isChecked: false
+      })
+    }
   },
   formSubmit: function (e) {
     var that = this
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    console.log('form发生了submit事件，携带数据为：', e.detail)
     console.log(app.globalData.userInfo)
     var data = e.detail.value
     data.user_id = app.globalData.userInfo.user_id
-    
     if(util.checkinput(e.detail.value.user_name, e.detail.value.user_cardid, e.detail.value.user_email))
     {
       wx.request({
@@ -37,12 +48,27 @@ Page({
           app.globalData.userInfo.user_cardid= e.detail.value.user_cardid,
           app.globalData.userInfo.user_email= e.detail.value.user_email,
           app.globalData.userInfo.user_phone= e.detail.value.user_phone
+          if(e.detail.value.switch){
+            app.globalData.userInfo.is_admin = '1'
+          }else{
+            app.globalData.userInfo.is_admin = '0'
+          }
           console.log('globaldata',app.globalData.userInfo)
-          wx.setStorageSync('userinfo', app.globalData.userInfo)
+          try{
+            wx.setStorageSync('userinfo', app.globalData.userInfo)
+          }catch(e){
+            console.log(e)
+          }
           wx.showToast({
             title: '修改成功',
             icon: 'success',
             duration: 2000
+          })
+          that.setData({
+            focus: true
+          })
+          wx.navigateTo({
+            url: '../msg_success/msg_success?info=修改成功',
           })
         },
         fail:function(e){
@@ -51,7 +77,7 @@ Page({
       })
     }else{
       wx.showToast({
-        title: '信息不完整',
+        title: '信息不完整,修改失败',
         icon: 'none',
         duration: 3000
       });
@@ -115,7 +141,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let that = this
+    that.setData({
+      focus: true
+    })
   },
 
   /**

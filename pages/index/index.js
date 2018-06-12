@@ -135,10 +135,10 @@ Page({
   goToDetailPage: function (e) {
     
     var info = e.currentTarget.dataset.info;
-    console.log('页面跳转', info)
+    console.log('页面跳转', info.book_id)
     wx.navigateTo({
       
-      url: '../bookdetail/bookdetail?info=' + JSON.stringify(info)
+      url: '../bookdetail/bookdetail?info=' + info.book_id
     });
   },
 })

@@ -1,5 +1,6 @@
 module.exports = {
-  url:'http://119.29.245.143/',
-  // url:'http://192.168.31.74:3000/',
-  // url: 'http://localhost:3000/',
+  // url:'http://122.204.161.247/',
+  // url:'http://localhost:3000/',
+  // url: 'http://192.168.1.100:3000/',
+  url:'http://111.230.89.209/',
 }

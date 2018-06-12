@@ -1,0 +1,5 @@
+/* pages/return_apply/return_apply.wxss */
+.line {
+  width: 100%;
+  border: 1px solid #eee;
+}

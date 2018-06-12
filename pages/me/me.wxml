@@ -2,22 +2,54 @@
 
 <view class="page">
   <view class="page__hd">
-    <view  bindtap="getDetailUserInfo" class="userinfo">
+     <!--<view wx:if="{{login_status}}" bindtap="getDetailUserInfo" class="userinfo">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text> 
+     
+    </view>
+    <button wx:if="{{!login_status}}" open-type='getUserInfo'>点击获取授权微信登录</button>-->
+    <view class="userinfo">
+      <open-data class="userinfo-avatar" type="userAvatarUrl" ></open-data>
+      <open-data class="userinfo-nickname" type="userNickName"></open-data>
     </view>
   </view>
 
   <view class="space-line"></view>
 
-  <view class="weui-cells weui-cells_after-title">
-    <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:for="{{meList}}" wx:key="text">
+    <view class="weui-cells weui-cells_after-title">
+    <navigator url="{{item.url}}" class="weui-cell weui-cell_access" 
+    hover-class="weui-cell_active" wx:for="{{meList}}" wx:key="text">
         <view class="weui-cell__hd">
-            <image src="{{item.icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            <image src="{{item.icon}}" 
+            style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;">
+            </image>
         </view>
         <view class="weui-cell__bd" style="padding-top:10rpx;">{{item.text}}</view>
-        <view  class="badge" wx:if="{{showBadge}}">1</view>
+        <!-- <view  class="badge" wx:if="{{showBadge}}">1</view> -->
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
-  </view> 
+  </view>  
+
+  <block wx:if="{{isAdmin}}">
+    <view class="weui-cells__title">管理员功能</view>
+      <view class="weui-cells weui-cells_after-title">
+          <navigator url="{{manageList[0].url}}" class="weui-cell weui-cell_access" 
+          hover-class="weui-cell_active">
+              <view class="weui-cell__bd weui-cell_primary">
+                  <view>{{manageList[0].text}}</view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </navigator>
+      </view>
+       <view class="weui-cells weui-cells_after-title">
+          <navigator url="{{manageList[1].url}}" class="weui-cell weui-cell_access" 
+          hover-class="weui-cell_active">
+              <view class="weui-cell__bd weui-cell_primary">
+                  <view>{{manageList[1].text}}</view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </navigator>
+      </view>
+  </block>
+
 </view>

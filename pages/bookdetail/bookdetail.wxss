@@ -94,7 +94,7 @@
 }
 
 .btn-area{
-  position: fixed;
+  position: relative;
   left: 35rpx;
   bottom: 0;
   width: 90%;

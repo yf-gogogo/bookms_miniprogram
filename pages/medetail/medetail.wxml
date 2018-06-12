@@ -1,16 +1,16 @@
 <!--pages/medetail/medetail.wxml-->
 <view class="page">
   <view class="page__hd">
-        <text class="page__title center">你好，{{nickName}}</text>
+        <open-data class="page__title center" type="userNickName"></open-data>
   </view>
   <view class="page__bd  page__bd_spacing">
-    <form bindsubmit="formSubmit" bindreset="formReset">
+    <form bindsubmit="formSubmit" bindreset="formReset" report-submit="true">
         <view class="weui-cells__title textcolor">姓名(必填)</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="user_name" disabled="{{focus}}"
-                    focus="{{!focus}}" value="{{user_name}}" placeholder="真实姓名">
+                    <input class="weui-input" name="user_name" 
+                     value="{{user_name}}" placeholder="真实姓名">
                     
                     </input>
                 </view>
@@ -21,7 +21,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type='number' disabled="{{focus}}"
+                    <input class="weui-input" type='number' 
                     name="user_cardid" value="{{user_cardid}}" placeholder="真实学号">
               
                     </input>
@@ -29,11 +29,11 @@
             </view>
         </view>
 
-        <view class="weui-cells__title textcolor">邮箱(必填)</view>
+        <view class="weui-cells__title textcolor">邮箱(必填，用来接收通知信息)</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" disabled="{{focus}}"
+                    <input class="weui-input" 
                      name="user_email" value="{{user_email}}" placeholder="真实邮箱" >
                      
                      </input>
@@ -44,11 +44,22 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input"  type='number' disabled="{{focus}}"
+                    <input class="weui-input"  type='number'
                      name="user_phone" value='{{user_phone}}' placeholder="电话" >
-                     
                      </input>
                 </view>
+            </view>
+        </view>
+        <!--开启管理员功能  -->
+        <view class="weui-cells__title textcolor">管理员认证（普通用户不用填，密码为：123）</view>
+         <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input"  type='number'
+                     password bindinput='bindKeyInput' placeholder="输入管理员密码，开启管理员功能" >
+                     </input>
+                </view>
+                <switch disabled='true' checked='{{isChecked}}' name='switch'/>
             </view>
         </view>
         <view class="weui-btn-area weui-flex">
@@ -56,10 +67,8 @@
               <button class="weui-btn placeholder" type="default" bindtap='back'>返回</button>
             </view>
             <view class="weui-flex__item">
-              <button class="weui-btn placeholder" type="primary"
-               wx:if="{{focus}}" bindtap='getfocus'>点击修改</button>
                <button class="weui-btn placeholder" type="primary"
-               wx:if="{{!focus}}" form-type='submit'>确定</button>
+                form-type='submit'>确定修改</button>
             </view>
         </view>
       </form>

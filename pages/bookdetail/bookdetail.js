@@ -1,15 +1,15 @@
 var util = require('../../utils/util');
 var conf = require('../../config');
 var app = getApp();
-var url = app.url;
 
 Page({
   data: {
     userInfo: null,
     bookMsg: {},
-    windowWidth: '',
-    windowHeight: '',
-    pixelRatio: '',
+    borrow: {},
+    order: {},
+    otherborrow: [],
+    otheroder: [],
 
     showBorrowBtn: false, //是否显示 借阅 按钮
     showOrderBtn: false, //是否显示 预约 按钮
@@ -18,40 +18,60 @@ Page({
   },
 
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     // 页面初始化 options为页面跳转所带来的参数
     console.log('options',options)
     // console.log('bookid',JSON.parse(options.book_id))
-    var book_info = JSON.parse(options.info)
+    var book_id = options.info
     var that = this;
     that.setData({
       userInfo: app.globalData.userInfo
     })
-    //1.动态获取设备屏幕的高度，然后计算scroll view的高度
-    wx.getSystemInfo({
+    wx.request({
+      url: conf.url + 'bookallinfo',
+      data:{
+        book_id:book_id,
+        user_id: that.data.userInfo.user_id
+      },
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'text',
       success: function (res) {
         that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
-          pixelRatio: res.pixelRatio
-        });
+          bookMsg: res.data.info,
+          borrow:res.data.borrow,
+          order:res.data.order,
+          otherborrow:res.data.otherborrow,
+          otherorder:res.data.otherorder
+        })
+        console.log(res.data)
+        //判断显示哪个按钮
+        if (that.data.bookMsg.current_num > 0 && that.data.borrow == null){
+          that.setData({
+            showBorrowBtn:"ture"
+          })
+        }
+        if (that.data.bookMsg.current_num > 0 && that.data.borrow != null) {
+          that.setData({
+            showBorrowedBtn: "ture"
+          })
+        }
+        if (that.data.bookMsg.current_num == 0 && that.data.order == null) {
+          that.setData({
+            showOrderBtn: "ture"
+          })
+        }
+        if (that.data.bookMsg.current_num == 0 && that.data.order != null) {
+          that.setData({
+            showOrderedBtn: "ture"
+          })
+        }
+        //关闭加载 
+        wx.hideLoading()
       }
-    });
-    console.log('从读书列表获取详细信息')
-      // 获取点击图书的详细信息
-      that.setData({
-        bookMsg: book_info
-      })
-    console.log('bookmsg',that.data.bookMsg)
-    console.log('根据剩余书本数量显示按钮')
-    if(book_info.current_num>0){
-      that.setData({
-        showBorrowBtn:true
-      })
-    }else{
-      that.setData({
-        showOrderBtn: true
-      })
-    }
+    })
   },
   onReady: function () {
     // 页面渲染完成
@@ -59,7 +79,7 @@ Page({
   },
   onShow: function () {
     // 页面显示
-
+    
   },
   onHide: function () {
     // 页面隐藏
@@ -69,51 +89,68 @@ Page({
     // 页面关闭
 
   },
-  borrowBook: function () {
+  formSubmit: function (e) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    console.log(e)
     var that = this
     let userInfo = app.globalData.userInfo
     console.log('从全局变量获取用户详细信息')
     console.log('userInfo', userInfo)
     if ( userInfo == null
     ||userInfo.user_name == null){
+      wx.hideLoading()
       wx.showToast({
         title: '请到个人界面完善你的信息',
         icon: 'none',
         duration: 3000
       });
+      wx.navigateTo({
+        url: '../medetail/medetail',
+      })
     }else{
       wx.request({
-        url: conf.url+'borrowbook?',
-        method: 'GET',
-        data:
-        {
-          user_id: userInfo.user_id,
-          // book_id: that.data.bookMsg.book_id,
+        url: conf.url + 'borrowingbook',
+        data:{
+          user_id:userInfo.user_id
         },
-        success: function (res) {
-          console.log('获取该用户借书数量')
-          console.log('num',res.data.msg.length)
-          if (res.data.msg.length > 0) {
+        method:'GET',
+        success:(res)=>{
+          console.log(res)
+          if (res.data.msg.length != 0) {
+            wx.hideLoading()
             wx.showToast({
               title: '按照规定，每人只能借一本书',
               icon: 'none',
               duration: 3000
             });
-
+           
           } else {
             wx.request({
-              url: conf.url+'borrowbook?',
+              url: conf.url + 'borrowbook',
               data:
               {
                 user_id: userInfo.user_id,
                 book_id: that.data.bookMsg.book_id,
+                form_id: e.detail.formId,
               },
               method: "POST",
               success: function (res) {
                 console.log('添加借书记录')
-                wx.navigateTo({
-                  url: '../../borrowtip/borrowtip'
+                wx.hideLoading()
+                wx.showToast({
+                  title: '借阅申请已提交',
+                  icon: 'success',
+                  duration: 3000
                 });
+                that.setData({
+                  showBorrowBtn: false,
+                  showBorrowedBtn: true,
+                })
+                wx.navigateTo({
+                  url: '../msg_success/msg_success?info=借阅申请已提交',
+                })
               }
             })
           }
@@ -127,7 +164,7 @@ Page({
     console.log('从全局变量获取用户详细信息')
     console.log('userInfo', userInfo)
     if (userInfo == null
-      ||userInfo.user_id == null){
+      ||userInfo.user_name == null){
       wx.showToast({
         title: '请到个人界面完善你的信息',
         icon: 'none',

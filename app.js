@@ -3,6 +3,7 @@ var conf = require('./config');
 App({
   globalData: {
     wx_userInfo: null,
+    borrow_status:null,
     userInfo: {
       user_id:null,
       user_name:null
@@ -14,10 +15,12 @@ App({
     var storage = wx.getStorageSync('userinfo')||null
     
     that.globalData.userInfo = storage
-   
-    // logs.unshift(Date.now())
+    let d = new Date()
+    console.log(typeof(d))
+    console.log(d.toLocaleString())
     console.log('查看本地缓存')
     console.log("log", that.globalData.userInfo)
+
     if(storage==null){
       wx.showLoading({
         title: '加载中',
@@ -47,26 +50,37 @@ App({
           }
         }
       })
-    }
-    
-  },
-  getWXUserInfo: function (cb) {
-    var that = this
-    if (this.globalData.wx_userInfo) {
-      typeof cb == "function" && cb(this.globalData.wx_userInfo)
-    } else {
-      //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log("userinfo",res.userInfo)
-              that.globalData.wx_userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.wx_userInfo)
-            }
-          })
+    }else{
+      wx.request({
+        url: conf.url + 'getuserid',
+        data:{
+          openid:storage.openid
+        },
+        success:function(res2){
+          that.globalData.userInfo.user_id = res2.data.msg.user_id;
+          console.log('更新userid'+res2.data.msg.user_id);
         }
       })
     }
-  }
+    
+  },
+  // getWXUserInfo: function (cb) {
+  //   var that = this
+  //   if (this.globalData.wx_userInfo) {
+  //     typeof cb == "function" && cb(this.globalData.wx_userInfo)
+  //   } else {
+  //     //调用登录接口
+  //     wx.login({
+  //       success: function () {
+  //         wx.getUserInfo({
+  //           success: function (res) {
+  //             console.log("userinfo",res.userInfo)
+  //             that.globalData.wx_userInfo = res.userInfo
+  //             typeof cb == "function" && cb(that.globalData.wx_userInfo)
+  //           }
+  //         })
+  //       }
+  //     })
+  //   }
+  // }
 })

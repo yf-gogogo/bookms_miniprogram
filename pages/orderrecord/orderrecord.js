@@ -9,7 +9,32 @@ Page({
   data: {
     bookList: [],
   },
-
+  formSubmit:function(e){
+    let that = this
+    let index = e.detail.value.index
+    let orderinfo = that.data.bookList[index]
+    wx.request({
+      url: conf.url + 'cancelorder',
+      data:{
+        order_id:orderinfo.order_id
+      },
+      method:'DELETE',
+      success:(res)=>{
+        wx.showToast({
+          title: '取消预约',
+          icon: 'success',
+          duration: 2000
+        })
+        let refrashbookList = that.data.bookList
+        refrashbookList.splice(e.detail.value.index, 1)
+        // that.onLoad()
+        console.log(refrashbookList)
+        that.setData({
+          bookList: refrashbookList
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -18,7 +43,7 @@ Page({
     wx.request({
       url: conf.url+'orderbook',
       data:{
-        user_id:1
+        user_id: app.globalData.userInfo.user_id
       },
       method: 'GET',
       success: function (res) {
